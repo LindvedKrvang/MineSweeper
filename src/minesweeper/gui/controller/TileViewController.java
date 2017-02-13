@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import minesweeper.be.Tile;
 
 /**
  * FXML Controller class
@@ -21,6 +22,8 @@ public class TileViewController implements Initializable {
 
     @FXML
     private Button btnTile;
+    
+    private Tile mTile;
 
     /**
      * Initializes the controller class.
@@ -32,6 +35,14 @@ public class TileViewController implements Initializable {
 
     @FXML
     private void handleButtonTile(ActionEvent event) {
+        btnTile.setText(mTile.getName());
     }
     
+    /**
+     * Sets the Tile of the button.
+     * @param tile 
+     */
+    public void setTile(Tile tile){
+        mTile = tile;
+    }
 }
