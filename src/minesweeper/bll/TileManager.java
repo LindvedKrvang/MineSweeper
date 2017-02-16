@@ -7,6 +7,7 @@ package minesweeper.bll;
 
 import java.util.ArrayList;
 import java.util.Random;
+import minesweeper.be.SingleListOfTiles;
 import minesweeper.be.Tile;
 
 /**
@@ -36,7 +37,7 @@ public class TileManager {
         int mineCounter = 0;
         int tilesPlaced = 0;
         for(int i = 0; i < totalTiles; i++){
-            if(rand.nextInt(2) == 0 && mineCounter != mines){
+            if(rand.nextInt(3) == 0 && mineCounter != mines){
                 listOfTiles.add(new Tile(true));
                 mineCounter++;
                 tilesPlaced++;
@@ -50,5 +51,46 @@ public class TileManager {
             }
         }
         return listOfTiles;
+    }
+    
+    /**
+     * Checks all adjacent tiles if it is a bomb or not and return the amount of bombs.
+     * @param tilePosition
+     * @param primaryList
+     * @param aboveList
+     * @param belowList
+     * @return 
+     */
+    public int checkForBombs(int tilePosition, SingleListOfTiles primaryList, SingleListOfTiles aboveList, SingleListOfTiles belowList){
+        int amountOfBombs = 0;
+        amountOfBombs += checkTile(tilePosition, aboveList, -1);
+        amountOfBombs += checkTile(tilePosition, aboveList, 0);
+        amountOfBombs += checkTile(tilePosition, aboveList, 1);
+        
+        amountOfBombs += checkTile(tilePosition, primaryList, -1);
+        amountOfBombs += checkTile(tilePosition, primaryList, 1);
+        
+        amountOfBombs += checkTile(tilePosition, belowList, -1);
+        amountOfBombs += checkTile(tilePosition, belowList, 0);
+        amountOfBombs += checkTile(tilePosition, belowList, 1);
+        
+        return amountOfBombs;
+    }
+    
+    /**
+     * Checks the specified tile if it exits and if it is a bomb.
+     * Return 1 if it is a bomb. 0 if it is not.
+     * @param tilePosition
+     * @param list
+     * @param difference
+     * @return 
+     */
+    private int checkTile(int tilePosition, SingleListOfTiles list, int difference) {
+        if(tilePosition + difference >= 0 && tilePosition + difference <= 10 && list != null){
+            if(list.get(tilePosition + difference).isBomb()){
+                return 1;
+            }        
+        }
+        return 0;
     }
 }

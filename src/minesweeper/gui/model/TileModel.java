@@ -31,7 +31,7 @@ public class TileModel {
     
     private ArrayList<SingleListOfTiles> mAllTileList;
     
-    private final TileManager tileManager;
+    private final TileManager mTileManager;
     
     public static TileModel getInstance(){
         if(instance == null){
@@ -41,9 +41,10 @@ public class TileModel {
     }
     
     public TileModel(){
-        tileManager  = TileManager.getInstance();
+        mTileManager  = TileManager.getInstance();
         mAllTileList = new ArrayList<>();
-        createList();        
+        createTiles();
+        giveBombReferences();
     }
     
     /**
@@ -55,14 +56,16 @@ public class TileModel {
     }
     
     /**
-     * Creates all the lists and puts them in seperated lists. 
+     * Creates all the tiles and puts them in seperated lists. 
      */
-    private void createList() {
-        mListOfTiles = tileManager.createTiles(99, 40);
+    private void createTiles() {
+        mListOfTiles = mTileManager.createTiles(99, 30);
         for(int i = 0; i < mListOfTiles.size(); i++){
             ArrayList<Tile> placeholder = new ArrayList();
             for(int j = 0; j < 11; j++){
-                placeholder.add(mListOfTiles.remove(0));
+                Tile tile = mListOfTiles.remove(0);
+                tile.setPositionInList(j);
+                placeholder.add(tile);
             }
             fillSingleList(i, placeholder);
         }
@@ -113,6 +116,36 @@ public class TileModel {
                 break;
             default:
                 break;
+        }
+    }
+
+    private void giveBombReferences() {
+        for(Tile tile : mListOne.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListOne, null, mListTwo));
+        }
+        for(Tile tile : mListTwo.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListTwo, mListOne, mListThree));
+        }
+        for(Tile tile : mListThree.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListThree, mListTwo, mListFour));
+        }
+        for(Tile tile : mListFour.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListFour, mListThree, mListFive));
+        }
+        for(Tile tile : mListFive.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListFive, mListFour, mListSix));
+        }
+        for(Tile tile : mListSix.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListSix, mListFive, mListSeven));
+        }
+        for(Tile tile : mListSeven.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListSeven, mListSix, mListEight));
+        }
+        for(Tile tile : mListEight.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListEight, mListSeven, mListNine));
+        }
+        for(Tile tile : mListNine.getList()){
+            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListNine, mListEight, null));
         }
     }
 }
