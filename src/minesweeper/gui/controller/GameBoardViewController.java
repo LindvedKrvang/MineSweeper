@@ -16,9 +16,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
+import minesweeper.be.SingleListOfTiles;
 import minesweeper.be.Tile;
-import minesweeper.bll.FileManager;
+import minesweeper.bll.TileManager;
 import minesweeper.gui.model.TileModel;
 
 /**
@@ -29,8 +31,11 @@ public class GameBoardViewController implements Initializable, ListChangeListene
 
     @FXML
     private FlowPane flowPane;
+    @FXML
+    private ScrollPane containerForFlowPane;
     
     private final TileModel tileModel;
+    
     
     public GameBoardViewController(){
         tileModel = TileModel.getInstance();
@@ -47,12 +52,14 @@ public class GameBoardViewController implements Initializable, ListChangeListene
     }
     
     private void addTilesToFlowPane(){
-        ArrayList<Tile> listOfTiles = tileModel.getListOfTiles();
+        ArrayList<SingleListOfTiles> listOfTiles = tileModel.getListOfTiles();
         for(int i = 0; i < listOfTiles.size(); i++){
-            try{
-                flowPane.getChildren().add(createTileNode(listOfTiles.get(i)));
-            }catch(IOException ex){
-                System.out.println(ex.getMessage());
+            for(int j = 0; j < listOfTiles.get(i).size(); j++){
+                try{
+                    flowPane.getChildren().add(createTileNode(listOfTiles.get(i).get(j)));
+                }catch(IOException ex){
+                    System.out.println(ex.getMessage());
+                }
             }
         }
     }

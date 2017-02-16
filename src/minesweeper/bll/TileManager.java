@@ -13,13 +13,13 @@ import minesweeper.be.Tile;
  *
  * @author Rasmus
  */
-public class FileManager {
+public class TileManager {
     
-    private static FileManager instance;
+    private static TileManager instance;
     
-    public static FileManager getInstance(){
+    public static TileManager getInstance(){
         if(instance == null){
-            instance = new FileManager();
+            instance = new TileManager();
         }
         return instance;
     }

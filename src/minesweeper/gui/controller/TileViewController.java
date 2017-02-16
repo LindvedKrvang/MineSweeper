@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import minesweeper.be.Tile;
+import minesweeper.gui.model.TileModel;
 
 /**
  * FXML Controller class
