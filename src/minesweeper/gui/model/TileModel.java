@@ -44,7 +44,8 @@ public class TileModel {
         mTileManager  = TileManager.getInstance();
         mAllTileList = new ArrayList<>();
         createTiles();
-        giveBombReferences();
+        giveListReferences();
+        giveBombAmountOfAdjacentBombs();
     }
     
     /**
@@ -119,33 +120,44 @@ public class TileModel {
         }
     }
 
-    private void giveBombReferences() {
+    private void giveListReferences() {
         for(Tile tile : mListOne.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListOne, null, mListTwo));
+            tile.setLists(mListOne, null, mListTwo);
         }
         for(Tile tile : mListTwo.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListTwo, mListOne, mListThree));
+            tile.setLists(mListTwo, mListOne, mListThree);
         }
         for(Tile tile : mListThree.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListThree, mListTwo, mListFour));
+            tile.setLists(mListThree, mListTwo, mListFour);
         }
         for(Tile tile : mListFour.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListFour, mListThree, mListFive));
+            tile.setLists(mListFour, mListThree, mListFive);
         }
         for(Tile tile : mListFive.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListFive, mListFour, mListSix));
+            tile.setLists(mListFive, mListFour, mListSix);
         }
         for(Tile tile : mListSix.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListSix, mListFive, mListSeven));
+            tile.setLists(mListSix, mListFive, mListSeven);
         }
         for(Tile tile : mListSeven.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListSeven, mListSix, mListEight));
+            tile.setLists(mListSeven, mListSix, mListEight);
         }
         for(Tile tile : mListEight.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListEight, mListSeven, mListNine));
+            tile.setLists(mListEight, mListSeven, mListNine);
         }
         for(Tile tile : mListNine.getList()){
-            tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), mListNine, mListEight, null));
+            tile.setLists(mListNine, mListEight, null);
+        }
+    }
+    
+    /**
+     * Gives all tiles the amount of bombs next to them.
+     */
+    private void giveBombAmountOfAdjacentBombs(){
+        for(SingleListOfTiles listOfAllList : mAllTileList){
+            for(Tile tile : listOfAllList.getList()){
+                tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), tile.getPrimaryList(), tile.getAboveList(), tile.getBelowList()));
+            }
         }
     }
 }

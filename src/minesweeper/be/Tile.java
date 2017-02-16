@@ -81,19 +81,19 @@ public class Tile {
     }
     
     /**
-     * Sets the primary, above and belows list of the tile.
+     * Sets the lists of the tile.
      * @param primary
      * @param above
      * @param below 
      */
-    public void setList(SingleListOfTiles primary, SingleListOfTiles above, SingleListOfTiles below){
+    public void setLists(SingleListOfTiles primary, SingleListOfTiles above, SingleListOfTiles below){
         mPrimaryList = primary;
         mAboveList = above;
         mBelowList = below;
     }
     
     /**
-     * Returns the primaryList.
+     * Get the primaryList.
      * @return 
      */
     public SingleListOfTiles getPrimaryList() {
@@ -101,7 +101,7 @@ public class Tile {
     }
     
     /**
-     * Retuns the aboveList.
+     * Get the aboveList.
      * @return 
      */
     public SingleListOfTiles getAboveList() {
@@ -109,12 +109,10 @@ public class Tile {
     }
     
     /**
-     * Returns the belowList.
+     * Get the belowList.
      * @return 
      */
     public SingleListOfTiles getBelowList() {
         return mBelowList;
-    }
-    
-    
+    }    
 }

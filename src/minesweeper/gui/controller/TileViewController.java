@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import minesweeper.be.Tile;
 import minesweeper.gui.model.TileModel;
 
@@ -32,11 +33,6 @@ public class TileViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-
-    @FXML
-    private void handleButtonTile(ActionEvent event) {
-        btnTile.setText(mTile.getName());
     }
     
     /**
@@ -45,5 +41,15 @@ public class TileViewController implements Initializable {
      */
     public void setTile(Tile tile){
         mTile = tile;
+    }
+
+    @FXML
+    private void handleButtonTile(MouseEvent event) {
+        btnTile.setText(mTile.getName());
+        if(mTile.isBomb() == true){
+            //TODO RKL: Make GameOver.
+        }else{
+            
+        }
     }
 }
