@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import minesweeper.be.Tile;
+import minesweeper.bll.TileManager;
 import minesweeper.gui.model.TileModel;
 
 /**
@@ -46,10 +47,27 @@ public class TileViewController implements Initializable {
     @FXML
     private void handleButtonTile(MouseEvent event) {
         btnTile.setText(mTile.getName());
+        mTile.setClickedTrue();
         if(mTile.isBomb() == true){
             //TODO RKL: Make GameOver.
-        }else{
-            
+        }else if(mTile.getAdjacentBombs() == 0){
+            TileModel.getInstance().checkSurroundingTiles(mTile.getPositionInList(), 
+                    mTile.getPrimaryList(), 
+                    mTile.getAboveList(), 
+                    mTile.getBelowList());
         }
+    }   
+    
+    /**
+     * Display the name of the tile and if it has zero adjacent bombs. Checks the tiles around it.
+     */
+    public void checkTile(){
+        if(mTile.getIsClicked() == false){
+            mTile.setClickedTrue();
+            btnTile.setText(mTile.getName());
+            if(mTile.getAdjacentBombs() == 0){
+                TileModel.getInstance().checkSurroundingTiles(mTile.getPositionInList(), mTile.getPrimaryList(), mTile.getAboveList(), mTile.getBelowList());
+            }
+        }        
     }
 }

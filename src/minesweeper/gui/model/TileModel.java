@@ -32,6 +32,7 @@ public class TileModel {
     private ArrayList<SingleListOfTiles> mAllTileList;
     
     private final TileManager mTileManager;
+    private final TileViewControllerModel mTileViewControllerModel;
     
     public static TileModel getInstance(){
         if(instance == null){
@@ -42,6 +43,7 @@ public class TileModel {
     
     public TileModel(){
         mTileManager  = TileManager.getInstance();
+        mTileViewControllerModel = TileViewControllerModel.getInstance();
         mAllTileList = new ArrayList<>();
         createTiles();
         giveListReferences();
@@ -159,5 +161,29 @@ public class TileModel {
                 tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), tile.getPrimaryList(), tile.getAboveList(), tile.getBelowList()));
             }
         }
+    }
+
+    public void checkSurroundingTiles(int positionInList, SingleListOfTiles primaryList, SingleListOfTiles aboveList, SingleListOfTiles belowList) {
+        checkTile(positionInList - 1, primaryList);
+        checkTile(positionInList + 1, primaryList);
+        
+        checkTile(positionInList - 1 , aboveList);
+        checkTile(positionInList, aboveList);
+        checkTile(positionInList + 1 , aboveList);
+        
+        checkTile(positionInList - 1, belowList);
+        checkTile(positionInList, belowList);
+        checkTile(positionInList + 1, belowList);
+    }
+    
+    /**
+     * Call the controller of the specified tile and call checkTile.
+     * @param position
+     * @param list 
+     */
+    private void checkTile(int position, SingleListOfTiles list) {
+        if(position >= 0 && position <= 10 && list != null){
+            list.get(position).getController().checkTile();
+        }        
     }
 }

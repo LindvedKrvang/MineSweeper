@@ -5,6 +5,8 @@
  */
 package minesweeper.be;
 
+import minesweeper.gui.controller.TileViewController;
+
 /**
  *
  * @author Rasmus
@@ -15,13 +17,17 @@ public class Tile {
     private String mName;
     private int mBombsAdjacent;
     private int mPositionInList;
+    private boolean mIsClicked;
     
     private SingleListOfTiles mPrimaryList;
     private SingleListOfTiles mAboveList;
     private SingleListOfTiles mBelowList;
     
+    private TileViewController mController;
+    
     public Tile(boolean isBomb){
         mIsBomb = isBomb;
+        mIsClicked = false;
         if(mIsBomb == true){
             mName = "B";
         }else{
@@ -115,4 +121,35 @@ public class Tile {
     public SingleListOfTiles getBelowList() {
         return mBelowList;
     }    
+    
+    /**
+     * Sets the controller for the tile.
+     * @param controller 
+     */
+    public void setController(TileViewController controller){
+        mController = controller;
+    }
+    
+    /**
+     * Gets the controller of the tile.
+     * @return 
+     */
+    public TileViewController getController(){
+        return mController;
+    }
+    
+    /**
+     * Sets mIsClicked equal to true.
+     */
+    public void setClickedTrue(){
+        mIsClicked = true;
+    }
+    
+    /**
+     * Returns mIsClicked.
+     * @return 
+     */
+    public boolean getIsClicked(){
+        return mIsClicked;
+    }
 }

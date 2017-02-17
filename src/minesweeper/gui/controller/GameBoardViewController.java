@@ -8,20 +8,17 @@ package minesweeper.gui.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Observable;
 import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import minesweeper.be.SingleListOfTiles;
 import minesweeper.be.Tile;
-import minesweeper.bll.TileManager;
 import minesweeper.gui.model.TileModel;
+import minesweeper.gui.model.TileViewControllerModel;
 
 /**
  *
@@ -31,14 +28,14 @@ public class GameBoardViewController implements Initializable, ListChangeListene
 
     @FXML
     private FlowPane flowPane;
-    @FXML
-    private ScrollPane containerForFlowPane;
     
-    private final TileModel tileModel;
+    private final TileModel mTileModel;
+    private final TileViewControllerModel mTileViewControllerModel;
     
     
     public GameBoardViewController(){
-        tileModel = TileModel.getInstance();
+        mTileModel = TileModel.getInstance();
+        mTileViewControllerModel = TileViewControllerModel.getInstance();
     }
     
     @Override
@@ -52,7 +49,7 @@ public class GameBoardViewController implements Initializable, ListChangeListene
     }
     
     private void addTilesToFlowPane(){
-        ArrayList<SingleListOfTiles> listOfTiles = tileModel.getListOfTiles();
+        ArrayList<SingleListOfTiles> listOfTiles = mTileModel.getListOfTiles();
         for(int i = 0; i < listOfTiles.size(); i++){
             for(int j = 0; j < listOfTiles.get(i).size(); j++){
                 try{
@@ -74,6 +71,8 @@ public class GameBoardViewController implements Initializable, ListChangeListene
         Node node = loader.load();
         TileViewController controller = loader.getController();
         controller.setTile(tile);
+        mTileViewControllerModel.addController(controller);
+        tile.setController(controller);
         return node;
     }
 }
