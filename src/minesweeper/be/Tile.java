@@ -18,6 +18,7 @@ public class Tile {
     private int mBombsAdjacent;
     private int mPositionInList;
     private boolean mIsClicked;
+    private boolean mIsFlagged;
     
     private SingleListOfTiles mPrimaryList;
     private SingleListOfTiles mAboveList;
@@ -28,6 +29,7 @@ public class Tile {
     public Tile(boolean isBomb){
         mIsBomb = isBomb;
         mIsClicked = false;
+        mIsFlagged = false;
         if(mIsBomb == true){
             mName = "B";
         }else{
@@ -151,5 +153,20 @@ public class Tile {
      */
     public boolean getIsClicked(){
         return mIsClicked;
+    }
+    
+    /**
+     * Sets mIsFlagged to the opposite.
+     */
+    public void setFlagged(){
+        mIsFlagged = !mIsFlagged;
+    }
+    
+    /**
+     * Returns mIsFlagged.
+     * @return 
+     */
+    public boolean getIsFlagged(){
+        return mIsFlagged;
     }
 }

@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import minesweeper.be.Tile;
 import minesweeper.bll.TileManager;
@@ -46,15 +47,24 @@ public class TileViewController implements Initializable {
 
     @FXML
     private void handleButtonTile(MouseEvent event) {
-        btnTile.setText(mTile.getName());
-        mTile.setClickedTrue();
-        if(mTile.isBomb() == true){
+        if(event.getButton() == MouseButton.SECONDARY && mTile.getIsClicked() == false){
+            mTile.setFlagged();
+            if(mTile.getIsFlagged() == true){
+                btnTile.setText("F");
+            }else{
+                btnTile.setText("");
+            }
+        }else if(mTile.getIsFlagged() == false){
+            btnTile.setText(mTile.getName());
+            mTile.setClickedTrue();
+            if(mTile.isBomb() == true){
             //TODO RKL: Make GameOver.
-        }else if(mTile.getAdjacentBombs() == 0){
-            TileModel.getInstance().checkSurroundingTiles(mTile.getPositionInList(), 
+            }else if(mTile.getAdjacentBombs() == 0){
+                TileModel.getInstance().checkSurroundingTiles(mTile.getPositionInList(), 
                     mTile.getPrimaryList(), 
                     mTile.getAboveList(), 
                     mTile.getBelowList());
+            }
         }
     }   
     
@@ -62,7 +72,7 @@ public class TileViewController implements Initializable {
      * Display the name of the tile and if it has zero adjacent bombs. Checks the tiles around it.
      */
     public void checkTile(){
-        if(mTile.getIsClicked() == false){
+        if(mTile.getIsClicked() == false && mTile.getIsFlagged() == false){
             mTile.setClickedTrue();
             btnTile.setText(mTile.getName());
             if(mTile.getAdjacentBombs() == 0){
