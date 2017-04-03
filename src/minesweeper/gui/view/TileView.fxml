@@ -3,9 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="0.0" prefWidth="0.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.60" fx:controller="minesweeper.gui.controller.TileViewController">
+<AnchorPane id="AnchorPane" prefHeight="0.0" prefWidth="0.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="minesweeper.gui.controller.TileViewController">
    <children>
-      <Button fx:id="btnTile" maxHeight="25.0" maxWidth="25.0" minHeight="25.0" minWidth="25.0" mnemonicParsing="false" onAction="#handleButtonTile" prefHeight="25.0" prefWidth="25.0" text="Button" />
+      <Button fx:id="btnTile" maxHeight="35.0" maxWidth="35.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" onMouseClicked="#handleButtonTile" prefHeight="35.0" prefWidth="35.0" />
    </children>
 </AnchorPane>
