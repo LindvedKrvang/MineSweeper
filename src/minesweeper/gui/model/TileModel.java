@@ -6,6 +6,7 @@
 package minesweeper.gui.model;
 
 import java.util.ArrayList;
+import static minesweeper.MineSweeper.TILES_PER_ROW;
 import minesweeper.be.SingleListOfTiles;
 import minesweeper.be.Tile;
 import minesweeper.bll.TileManager;
@@ -15,9 +16,9 @@ import minesweeper.bll.TileManager;
  * @author Rasmus
  */
 public class TileModel {
-    
+
     private static TileModel instance;
-    
+
     private ArrayList<Tile> mListOfTiles;
     private SingleListOfTiles mListOne;
     private SingleListOfTiles mListTwo;
@@ -28,44 +29,42 @@ public class TileModel {
     private SingleListOfTiles mListSeven;
     private SingleListOfTiles mListEight;
     private SingleListOfTiles mListNine;
-    
+
     private ArrayList<SingleListOfTiles> mAllTileList;
-    
+
     private final TileManager mTileManager;
     private final TileViewControllerModel mTileViewControllerModel;
-    
-    public static TileModel getInstance(){
-        if(instance == null){
+
+    public static TileModel getInstance() {
+        if (instance == null) {
             instance = new TileModel();
         }
         return instance;
     }
-    
-    public TileModel(){
-        mTileManager  = TileManager.getInstance();
+
+    public TileModel() {
+        mTileManager = TileManager.getInstance();
         mTileViewControllerModel = TileViewControllerModel.getInstance();
-        mAllTileList = new ArrayList<>();
-        createTiles();
-        giveListReferences();
-        giveBombAmountOfAdjacentBombs();
+        createBoard();
     }
-    
+
     /**
      * Gets the firstListOfTiles.
-     * @return 
+     *
+     * @return
      */
-    public ArrayList<SingleListOfTiles> getListOfTiles(){
+    public ArrayList<SingleListOfTiles> getListOfTiles() {
         return mAllTileList;
     }
-    
+
     /**
-     * Creates all the tiles and puts them in seperated lists. 
+     * Creates all the tiles and puts them in seperated lists.
      */
     private void createTiles() {
         mListOfTiles = mTileManager.createTiles(99, 30);
-        for(int i = 0; i < mListOfTiles.size(); i++){
+        for (int i = 0; i < mListOfTiles.size(); i++) {
             ArrayList<Tile> placeholder = new ArrayList();
-            for(int j = 0; j < 11; j++){
+            for (int j = 0; j < TILES_PER_ROW; j++) {
                 Tile tile = mListOfTiles.remove(0);
                 tile.setPositionInList(j);
                 placeholder.add(tile);
@@ -73,11 +72,12 @@ public class TileModel {
             fillSingleList(i, placeholder);
         }
     }
-    
+
     /**
      * Fills the list with the parsed list.
+     *
      * @param i
-     * @param placeholder 
+     * @param placeholder
      */
     private void fillSingleList(int i, ArrayList<Tile> placeholder) {
         switch (i) {
@@ -123,67 +123,87 @@ public class TileModel {
     }
 
     private void giveListReferences() {
-        for(Tile tile : mListOne.getList()){
+        for (Tile tile : mListOne.getList()) {
             tile.setLists(mListOne, null, mListTwo);
         }
-        for(Tile tile : mListTwo.getList()){
+        for (Tile tile : mListTwo.getList()) {
             tile.setLists(mListTwo, mListOne, mListThree);
         }
-        for(Tile tile : mListThree.getList()){
+        for (Tile tile : mListThree.getList()) {
             tile.setLists(mListThree, mListTwo, mListFour);
         }
-        for(Tile tile : mListFour.getList()){
+        for (Tile tile : mListFour.getList()) {
             tile.setLists(mListFour, mListThree, mListFive);
         }
-        for(Tile tile : mListFive.getList()){
+        for (Tile tile : mListFive.getList()) {
             tile.setLists(mListFive, mListFour, mListSix);
         }
-        for(Tile tile : mListSix.getList()){
+        for (Tile tile : mListSix.getList()) {
             tile.setLists(mListSix, mListFive, mListSeven);
         }
-        for(Tile tile : mListSeven.getList()){
+        for (Tile tile : mListSeven.getList()) {
             tile.setLists(mListSeven, mListSix, mListEight);
         }
-        for(Tile tile : mListEight.getList()){
+        for (Tile tile : mListEight.getList()) {
             tile.setLists(mListEight, mListSeven, mListNine);
         }
-        for(Tile tile : mListNine.getList()){
+        for (Tile tile : mListNine.getList()) {
             tile.setLists(mListNine, mListEight, null);
         }
     }
-    
+
     /**
      * Gives all tiles the amount of bombs next to them.
      */
-    private void giveBombAmountOfAdjacentBombs(){
-        for(SingleListOfTiles listOfAllList : mAllTileList){
-            for(Tile tile : listOfAllList.getList()){
+    private void giveBombAmountOfAdjacentBombs() {
+        for (SingleListOfTiles listOfAllList : mAllTileList) {
+            for (Tile tile : listOfAllList.getList()) {
                 tile.setAdjacentBombs(mTileManager.checkForBombs(tile.getPositionInList(), tile.getPrimaryList(), tile.getAboveList(), tile.getBelowList()));
             }
         }
     }
 
+    /**
+     * For each tile around the parsed tile, checks if it has any adjacent
+     * bombs.
+     *
+     * @param positionInList
+     * @param primaryList
+     * @param aboveList
+     * @param belowList
+     */
     public void checkSurroundingTiles(int positionInList, SingleListOfTiles primaryList, SingleListOfTiles aboveList, SingleListOfTiles belowList) {
         checkTile(positionInList - 1, primaryList);
         checkTile(positionInList + 1, primaryList);
-        
-        checkTile(positionInList - 1 , aboveList);
+
+        checkTile(positionInList - 1, aboveList);
         checkTile(positionInList, aboveList);
-        checkTile(positionInList + 1 , aboveList);
-        
+        checkTile(positionInList + 1, aboveList);
+
         checkTile(positionInList - 1, belowList);
         checkTile(positionInList, belowList);
         checkTile(positionInList + 1, belowList);
     }
-    
+
     /**
      * Call the controller of the specified tile and call checkTile.
+     *
      * @param position
-     * @param list 
+     * @param list
      */
     private void checkTile(int position, SingleListOfTiles list) {
-        if(position >= 0 && position <= 10 && list != null){
+        if (position >= 0 && position <= TILES_PER_ROW - 1 && list != null) {
             list.get(position).getController().checkTile();
-        }        
+        }
+    }
+
+    /**
+     * Creates all the tiles and gives them all their references.
+     */
+    public void createBoard() {
+        mAllTileList = new ArrayList<>();
+        createTiles();
+        giveListReferences();
+        giveBombAmountOfAdjacentBombs();
     }
 }

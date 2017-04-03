@@ -16,13 +16,16 @@ import javafx.stage.Stage;
  * @author Rasmus
  */
 public class MineSweeper extends Application {
-    
+
+    public static final int TILES_PER_ROW = 11;
+    public static final double LENGTH_OF_TILE = 35.1;
+
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("gui/view/GameBoardView.fxml"));
-        
+
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
         stage.show();
     }
@@ -33,5 +36,5 @@ public class MineSweeper extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }

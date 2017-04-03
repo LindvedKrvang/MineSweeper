@@ -7,6 +7,7 @@ package minesweeper.bll;
 
 import java.util.ArrayList;
 import java.util.Random;
+import static minesweeper.MineSweeper.TILES_PER_ROW;
 import minesweeper.be.SingleListOfTiles;
 import minesweeper.be.Tile;
 
@@ -86,7 +87,7 @@ public class TileManager {
      * @return 
      */
     private int checkTile(int tilePosition, SingleListOfTiles list, int difference) {
-        if(tilePosition + difference >= 0 && tilePosition + difference <= 10 && list != null){
+        if(tilePosition + difference >= 0 && tilePosition + difference <= TILES_PER_ROW - 1 && list != null){
             if(list.get(tilePosition + difference).isBomb()){
                 return 1;
             }        

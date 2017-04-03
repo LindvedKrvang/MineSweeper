@@ -5,19 +5,12 @@
             <url>src/minesweeper/gui/model/TileModel.java</url>
             <bookmark id="1">
                 <name/>
-                <line>70</line>
+                <line>71</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Rasmus/Documents/GameDevelopment/MineSweeper/src/minesweeper/be/Tile.java</file>
-            <file>file:/C:/Users/Rasmus/Documents/GameDevelopment/MineSweeper/src/minesweeper/gui/controller/TileViewController.java</file>
-            <file>file:/C:/Users/Rasmus/Documents/GameDevelopment/MineSweeper/src/minesweeper/be/SingleListOfTiles.java</file>
-            <file>file:/C:/Users/Rasmus/Documents/GameDevelopment/MineSweeper/src/minesweeper/gui/model/TileModel.java</file>
-            <file>file:/C:/Users/Rasmus/Documents/GameDevelopment/MineSweeper/src/minesweeper/gui/controller/GameBoardViewController.java</file>
-            <file>file:/C:/Users/Rasmus/Documents/GameDevelopment/MineSweeper/src/minesweeper/bll/TileManager.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
